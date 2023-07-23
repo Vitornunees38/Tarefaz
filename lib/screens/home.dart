@@ -97,12 +97,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void filterStatus(List<ToDo> todoList){
-    for (var todo in todoList) {
-      todo.isDone? doneToDo.add(todo) : pendentToDo.add(todo);
-    }
-  }
-
   void _toggleToDoStatus(ToDo todo){
     setState(() {
       todo.isDone = !todo.isDone;
