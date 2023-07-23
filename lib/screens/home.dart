@@ -15,6 +15,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   
   final todosList = ToDo.todoList();
+  List<ToDo> doneToDo = [];
+  List<ToDo> pendentToDo = [];
   List<ToDo> _foundToDo = [];
   final _todoController = TextEditingController();
 
@@ -93,6 +95,12 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+  void filterStatus(List<ToDo> todoList){
+    for (var todo in todoList) {
+      todo.isDone? doneToDo.add(todo) : pendentToDo.add(todo);
+    }
   }
 
   void _toggleToDoStatus(ToDo todo){
