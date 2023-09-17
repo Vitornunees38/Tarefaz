@@ -11,10 +11,10 @@ class ToDo{
 
   static List<ToDo> todoList(){
     return [
-      ToDo(id: '01', text: 'Academia', isDone: true),
-      ToDo(id: '02', text: 'Estudar para prova', isDone: true),
-      ToDo(id: '03', text: 'Verificar e-mails'),
-      ToDo(id: '04', text: 'Beber 4L de água')
+      ToDo(id: '01', text: 'Academia'),
+      ToDo(id: '02', text: 'Estudar para a prova de Cálculo'),
+      ToDo(id: '03', text: 'Verificar e-mails', isDone: true),
+      ToDo(id: '04', text: 'Regar as plantas')
     ];
   }
 }
