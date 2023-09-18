@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   List<ToDo> doneToDo = [];
   List<ToDo> pendentToDo = [];
   List<ToDo> _foundToDo = [];
+  late int pendentCount;
   final _todoController = TextEditingController();
 
   @override
@@ -42,7 +43,7 @@ class _HomeState extends State<Home> {
                       Container(
                         margin: EdgeInsets.only(top: 40, bottom: 20, left: 15),
                         child: Text(
-                          "Tarefaz",
+                          "$pendentCount Tarefaz",
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w500,
@@ -117,18 +118,18 @@ class _HomeState extends State<Home> {
         doneToDo.add(todo);
         pendentToDo.remove(todo);
         _foundToDo = doneToDo + pendentToDo;
+        pendentCount--;
       } else {
         pendentToDo.add(todo);
         doneToDo.remove(todo);
         _foundToDo = doneToDo + pendentToDo;
+        pendentCount++;
       }
     });
   }
 
   void _deleteToDo(String id) {
-    setState(() {
-      todosList.removeWhere((item) => item.id == id);
-    });
+    //TODO: IMPLEMENT ME!!!
   }
 
   void _addToDo(String toDo) {
@@ -136,7 +137,9 @@ class _HomeState extends State<Home> {
       todosList.add(ToDo(
           id: DateTime.now().millisecondsSinceEpoch.toString(), text: toDo));
     });
-    _todoController.clear();
+    pendentToDo.add(
+        ToDo(id: DateTime.now().millisecondsSinceEpoch.toString(), text: toDo));
+    _foundToDo = doneToDo + pendentToDo;
   }
 
   void _filterSearch(String searchText) {
@@ -159,18 +162,13 @@ class _HomeState extends State<Home> {
     return AppBar(
       elevation: 0,
       backgroundColor: bgColor,
-      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Icon(
-          Icons.menu,
-          color: txtBox,
-          size: 30,
-        ),
+      title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Container(
           width: 35,
           height: 35,
           child: Image.network(
               'https://www.digitary.net/wp-content/uploads/2021/07/Generic-Profile-Image-300x300.png'),
-        )
+        ),
       ]),
     );
   }
@@ -198,7 +196,6 @@ class _HomeState extends State<Home> {
   }
 
   initializeData() {
-    _foundToDo = todosList;
     for (var currTodo in todosList) {
       if (currTodo.isDone) {
         doneToDo.add(currTodo);
@@ -206,5 +203,7 @@ class _HomeState extends State<Home> {
         pendentToDo.add(currTodo);
       }
     }
+    pendentCount = pendentToDo.length;
+    _foundToDo = doneToDo + pendentToDo;
   }
 }
